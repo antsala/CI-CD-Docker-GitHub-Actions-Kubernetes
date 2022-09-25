@@ -252,7 +252,11 @@ En tu repositorio de ***Docker Hub*** verás la nueva imagen subida.
 
 ![Dockerhub](./img/202209252015.png)
 
-Con esto queda finalizada la parte de Integración Contínua.
+Con esto queda finalizada la parte de Integración Continua.
+
+## Ejercicio 6: Iniciar Minikube y crear un deployment de prueba.
+
+
 
 
 
