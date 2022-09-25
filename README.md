@@ -258,13 +258,28 @@ Con esto queda finalizada la parte de Integración Continua.
 
 Probamos el despliegue de la aplicación en el cluster Minikube.
 
-
-
+Iniciamos ***Minikube***. En la terminal, escribimos.
+```
+minikube start
+```
 
 Copiamos los archivos yaml de la aplicación.
 ```
 cp ~/CI-CD-Docker-GitHub-Actions-Kubernetes/*.yml ~/CI-CD-Test/
 ``` 
+
+Editamos el archivo de deployment 
+
+Hacemos el deployment.
+```
+cd ~/CI-CD-Test
+
+kubectl apply -f helloContainerDeployment.yml
+
+kubectl apply -f helloContainerService.yml
+```
+
+
 
 
 
