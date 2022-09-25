@@ -109,12 +109,50 @@ Ya tenemos el código fuente de la app y el Dockerfile para general la imagen en
 
 ## Ejercicio 2: Contenerizar la aplicación.
 
-Usamos la aplicación ***helloContainer*** cuya finalidad es la de levantar un servidor web en el puerto ***8080***. Cuando te conectas a él, responde mostrando en nombre de la máquina y las IPs que tiene configurada.
+La aplicación ***helloContainer*** levanta un servidor web en el puerto ***8080***. Cuando te conectas a él, responde mostrando en nombre de la máquina y las IPs que tiene configurada.
 
 Vamos a abrir el archivo ***helloContainer.go*** que tiene el código fuente de la aplicación. Usa tu editor preferido (en este tutorial usamos ***nano***)
+Nota: Para salir usa ***CTRL+X***.
 ```
 nano helloContainer/helloContainer.go
 ```
+
+De la misma forma, el ***Dockerfile***, compila el código fuente y genera una imagen que contiene el ejecutable. Lo repasamos.
+```
+nano Dockerfile
+```
+
+Cerramos el editor sin cambiar nada.
+
+Hasta el momento, el workflow que hemos usado es siempre el mismo. Generaríamos la imagen con el comando ***docker build*** y la subiríamos a un repositorio como ***Docker Hub***. Posteriormente instruiríamos al cluster para que creara un contenedor, descargando la imagen desde el repositorio. 
+
+Vamos a realizar todo el proceso, de forma automática, en el respositorio de ***GitHub***. Ni siquiera necesitaríamos tener ***Docker*** instalado.
+
+## Ejercicio 3: Crear una Action en GitHub.
+
+Para poder usar acciones en el repositorio necesitamos crear una ruta de directorios que deberá llamarse obligatoriamente ***.github/workflows***.
+Nota: Observa que el directorio ***github*** es oculto por empezar por un punto.
+```
+mkdir -p .github/workflows
+```
+
+El el directorio anterior, creamos un archivo que definirá la acción de github. El nombre puede ser cualquiera, pero debe usar formato ***YAML***.
+Nota: lo llamamos ***compila_y_sube.yml*** porque su finalidad es generar la imagen de contenedor y subirla a ***DockerHub***. 
+```
+nano .github/workflows/compila_y_sube.yml
+```
+
+Esta acción de GitHub hace lo siguiente.
+
+Está a la espera de recibir el evento ***push*** (on push), que se produce cuando subimos al repositorio una actualización del código fuente (o del Dockerfile), por medio del comando ***git push***.
+
+![on push](./img/202209251545.png)
+
+
+
+
+
+
 
 
 
