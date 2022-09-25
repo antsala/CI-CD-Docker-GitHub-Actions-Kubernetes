@@ -142,7 +142,7 @@ Vamos a realizar todo el proceso, de forma automática, en el respositorio de **
 Para poder usar acciones en el repositorio necesitamos crear una ruta de directorios que deberá llamarse obligatoriamente ***.github/workflows***.
 Nota: Observa que el directorio ***github*** es oculto por empezar por un punto.
 ```
-mkdir -p ~/.github/workflows
+mkdir -p ~/CI-CD-Test/.github/workflows
 ```
 
 El el directorio anterior, creamos un archivo que definirá la acción de github. El nombre puede ser cualquiera, pero debe usar formato ***YAML***.
@@ -154,7 +154,7 @@ cp ~/CI-CD-Docker-GitHub-Actions-Kubernetes/compila_y_sube.yml ~/CI-CD-Test/.git
 ```
 
 ```
-nano .github/workflows/compila_y_sube.yml
+nano ~/CI-CD-Test/.github/workflows/compila_y_sube.yml
 ```
 
 Esta acción de GitHub hace lo siguiente.
@@ -217,8 +217,11 @@ Supongamos que acabamos de terminar la nueva versión de la aplicación. Con ***
 
 Debemos "simular" que tenemos una versión nueva en el código fuente, de lo contrario el comando push indicará que no hay cambios.
 
-En la terminal, escribimos. actualizamos el comentario de la primera línea poniendo la fecha y hora actuales. Guardamos.
+Creamos un comentario en la primera línea poniendo la fecha y hora actuales. Guardamos.
+Nota: Usa ***//*** para poner un comentario.
 ```
+cd ~/CI-CD-Test
+
 nano helloContainer/helloContainer.go
 ```
 
@@ -229,14 +232,29 @@ git add .github/workflows/compila_y_sube.yml
 
 Hacemos el commit.
 ```
+git commit -m "Nueva versión del dia <fecha>"
+```
 
-
-
+Hacemos el push, y eso iniciará todo el proceso.
 ```
 git push
 ```
 
 En la página web del repositorio ***CI-CD-Test*** hacemos clic en el botón ***Actions***, debemos ver como se ha capturado el evento push y se dispara el workflow.
+
+En la imagen puedes ver como se ha iniciado el workflow.
+
+![workflow](./img/202209252012.png)
+
+Ya solo es cuestión de hacer clic en el flujo para ver qué está haciendo, si presenta errores o ha terminado correctamente.
+
+En tu repositorio de ***Docker Hub*** verás la nueva imagen subida.
+
+![Dockerhub](./img/202209252015.png)
+
+Con esto queda finalizada la parte de Integración Contínua.
+
+
 
 
 
