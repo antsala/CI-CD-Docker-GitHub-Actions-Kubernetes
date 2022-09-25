@@ -49,6 +49,63 @@ Como puedes ver en la siguiente imagen, tenemos el ***Dockerfile*** que genera l
 
 ![Archivos copiados](./img/202209251430.png)
 
+Para poder ejecutar comandos ***Git*** debemos tener configurado el ***nombre de usuario*** y el ***email***.
+```
+git config --global user.name "<Por aqui tu nombre>"
+
+git config --global user.email "<Por aqui tu email>"
+```
+
+Procedemos a agregar el archivo y la carpeta al ***staging***. En la terminal, escribimos.
+```
+git add Dockerfile
+
+git add helloContainer
+```
+
+Comprobamos que todo es correcto.
+```
+git status
+```
+
+El resultado debe ser el siguiente.
+
+![Git status](./img/202209251438.png)
+
+Hacemos un commit.
+```
+git commit -m "Commit inicial"
+```
+
+Actualizamos el repositorio remoto. Desde el 13 de Agosto de 2021, ***GitHub*** ya no permite usar el password para autenticar las operaciones de ***git***. 
+
+Debemos generar un ***PAT*** (Personal Access Token). Para ello, desde la página web de ***GitHub***, desplegamos el perfil y entramos en la opción ***Settings/Developer Settings/Personal Access Token/Generate New Token***.
+
+Rellenamos el formulario.
+
+* En ***Note*** escribimos un nombre que identifique la utilidad del ***token oauth*** que estamos creando.
+
+* También debemos indicar el ámbito del acceso que estamos concediendo. Elegimos ***Full control of private repositories***.
+
+La imagen resume la configuración correcta.
+
+![PAT](./img/202209251457.png)
+
+Hacia la parte final de la página web encontraremos el botón ***Generate token***, en el que hacemos clic.
+
+Copiamos el token de acceso en el portapapeles. Es importante tener en cuenta que ya no lo podremos visualizar más y, si lo perdemos, será necesario crear un ***PAT*** nuevo.
+
+
+En la terminal escribimos.
+
+```
+git push
+```
+
+Nos pedirá el nombre de usuario de GitHub y como password, pegamos el que tenemos copiado en el portapapeles.
+
+Ya tenemos el código fuente de la app y el Dockerfile para general la imagen en GitHub.
+
 
 ## Ejercicio 2: Contenerizar la aplicación.
 
