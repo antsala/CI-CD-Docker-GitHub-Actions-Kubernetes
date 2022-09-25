@@ -352,9 +352,9 @@ La última acción verifica que los nuevos contenedores se han iniciado correcta
 
 
 Necesitamos hacer un push. Este subirá la última versión de la aplicación, pero primero debemos borrar el workflow que solo hace la integración continua.
+Nota: git ***rm*** también borra el archivo.
 ```
 git rm ~/CI-CD-Test/.github/workflows/compila_y_sube.yml
-```
 
 cd ~/CI-CD-Test
 ```
@@ -373,6 +373,23 @@ y finalmente el ***push*** para que se inicie todo el proceso.
 ```
 git push
 ```
+
+Verificamos que la imagen de los contenedores es la última disponible en ***DockerHub***.
+```
+kubectl get pods -o jsonpath="{..image}"
+```
+
+![version imagen contenedor](./img/202209252358.png)
+
+
+![versiones Docker Hub](./img/202209252359.png)
+
+
+Fin del laboratorio.
+
+
+
+
 
 
 
