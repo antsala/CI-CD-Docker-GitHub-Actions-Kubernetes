@@ -142,7 +142,7 @@ Vamos a realizar todo el proceso, de forma automática, en el respositorio de **
 Para poder usar acciones en el repositorio necesitamos crear una ruta de directorios que deberá llamarse obligatoriamente ***.github/workflows***.
 Nota: Observa que el directorio ***github*** es oculto por empezar por un punto.
 ```
-mkdir -p .github/workflows
+mkdir -p ~/.github/workflows
 ```
 
 El el directorio anterior, creamos un archivo que definirá la acción de github. El nombre puede ser cualquiera, pero debe usar formato ***YAML***.
