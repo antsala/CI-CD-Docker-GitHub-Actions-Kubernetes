@@ -198,7 +198,7 @@ Es el momento de hacer la compilación de la imagen. La siguiente acción que us
 
 Los secretos almacenarán el nombre de usuario y la contraseña para poder logarse en ***Docker Hub***. Para ello, en la página web del repositorio ***CI-CD-Test*** hacemos clic en ***Settings***.
 
-Luego, en el panel que aparece a la izquierdan seleccionamos ***Secrets/Actions***, y en la parte superior derecha, hacemos clic en el botón ***New repository secret***.
+Luego, en el panel que aparece a la izquierda, seleccionamos ***Secrets/Actions***, y en la parte superior derecha, hacemos clic en el botón ***New repository secret***.
 
 ![new secret](./img/202209251654.png)
 
@@ -285,12 +285,7 @@ kubectl apply -f helloContainerDeployment.yml
 kubectl apply -f helloContainerService.yml
 ```
 
-Habilitamos el túnel de Minikube. En una nueva terminal escribimos.
-```
-minikube tunnel
-```
-
-Volvemos a la terminal anterior y escribimos.
+Volvemos a la terminal y escribimos.
 ```
 kubectl get services
 ```
@@ -312,7 +307,7 @@ La salida debe ser similar a esta.
 
 ## Ejercicio 7: Despliegue continuo (CD)
 
-Vamos a ampliar el archivo de workflow para que haga la implementación de la nueva versión de la aplicación en el cluster de Kubernetes. El repositorio local ya tiene este archivo. Lo abrimos para estudiarlo.
+Vamos a ampliar el archivo de workflow para que haga la implementación de la nueva versión de la aplicación en el cluster de Kubernetes. El repositorio local ya tiene este archivo. Lo abrimos para estudiarlo. 
 ```
 nano compila_sube_y_despliega.yml
 ```
@@ -325,7 +320,40 @@ La novedad viene en la parte del despliegue, a partir de la acción llamada ***C
 
 ![steebchen](./img/202209252134.png)
 
-Para que GitHub pueda controlar el cluster, es necesario pasar información de autenticación del cluster Minikube. Estos datos se guardarán como secreto.
+Para que GitHub pueda controlar el cluster, es necesario pasar información de autenticación del cluster de Kubernetes. Estos datos se guardarán como secreto en **GitHub***.
+
+En una nueva terminal vamos a instalar la herramienta ***xclip***, que nos facilitará el acceso al portapapeles.
+```
+sudo apt-get install -y xclip
+```
+
+Copiamos los datos de acceso al cluster.
+```
+cat ~/.kube/config | base64 | xclip -selection clipboard
+```
+
+En la página web del repositorio ***CI-CD-Test***, hacemos  clic en ***Settings***.
+
+Luego, en el panel que aparece a la izquierda, seleccionamos ***Secrets/Actions***, y en la parte superior derecha, hacemos clic en el botón ***New repository secret***.
+
+El secreto debe llamarse ***KUBE_CONFIG_DATA*** y el valor lo tenemo copiado en el portapapeles, así que lo pegamos. Guardamos.
+
+La acción inyecta en la variable de entorno ***KUBE_CONFIG_DATA*** el valor del secreto guardado en ***GitHub***. Además cambia la imagen de los contenedores (que son 3) que está corriendo el deployment a la última imagen compilada y subida a ***DockerHub***.
+
+![cambiar imagen](./img/202209252218.png)
+
+La última acción verifica que los nuevos contenedores se han iniciado correctamente usando la última imagen, y si no es así, hace un ***rollback*** para volver al ***ReplicaSet*** anterior.
+
+
+
+
+
+
+
+
+
+
+
 
 
 
