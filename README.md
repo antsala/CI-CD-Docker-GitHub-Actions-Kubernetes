@@ -85,18 +85,27 @@ Rellenamos el formulario.
 
 * En ***Note*** escribimos un nombre que identifique la utilidad del ***token oauth*** que estamos creando.
 
-* También debemos indicar el ámbito del acceso que estamos concediendo. Elegimos ***Full control of private repositories***.
+* También debemos indicar el ámbito del acceso que estamos concediendo. Elegimos ***Full control of private repositories***, que nos permitirá el acceso a los archivos del repositorio.
+
+* Y no debe olvidarse marcar ***workflow***, pues también tendremos que poder acceder a los archivos que definen las ***acciones de GitHub***. 
 
 La imagen resume la configuración correcta.
 
-![PAT](./img/202209251457.png)
+![PAT](./img/202209251458.png)
 
 Hacia la parte final de la página web encontraremos el botón ***Generate token***, en el que hacemos clic.
 
-Copiamos el token de acceso en el portapapeles. Es importante tener en cuenta que ya no lo podremos visualizar más y, si lo perdemos, será necesario crear un ***PAT*** nuevo.
+Copiamos el token de acceso en el portapapeles. Es importante tener en cuenta que ya no lo podremos visualizar más y, si lo perdemos, será necesario crear un ***PAT*** nuevo. Es una buena técnica almacenar este token en alguna aplicación que almacene passwords de forma segura para poder acceder a él cuando sea necesario.
 
+En este laboratorio y por comodidad, indicaremos a ***git*** que cachee el password, para que así no tengamos que escribirlo más.
+Nota: Es una mala práctica hacer esto en entornos de producción.
 
-En la terminal escribimos.
+En la terminal escribimos el siguiente comando para cachear las contraseñas.
+```
+git config --global credential.helper cache
+```
+
+Ahora hacemos el ***push***. En la terminal escribimos.
 
 ```
 git push
@@ -166,11 +175,36 @@ Esta última acción necesita parámetros para configurarse y se los proporciona
 
 ![with](./img/202209251639.png)
 
-***GitHub*** deberá logarse en ***DockerHub*** para hacer el push de la imagen, y para eso necesita credenciales. Esas credenciales las guardaremos como ***secretos*** de DockerHub (lo vamos a hacer en breve). De esta forma, la acción es capaz de extraer el nombre de usuario y el password necesarios, consultando los secretos ***DOCKER_HUB_USERNAME*** y ***DOCKER_HUB_PASSWORD***.
+***GitHub*** deberá logarse en ***DockerHub*** para hacer el push de la imagen, y para eso necesita credenciales. Esas credenciales las guardaremos como ***secretos de GitHub*** (lo vamos a hacer en breve). De esta forma, la acción es capaz de extraer el nombre de usuario y el password necesarios, consultando los secretos ***DOCKER_HUB_USERNAME*** y ***DOCKER_HUB_PASSWORD***.
 
-Otra necesitad que tiene la acción es el nombre del repositorio que se va a usar en ***DockerHub***, la variable ***github.repository*** con tiene el nombre del repositorio en ***GitHub***, que es ***CI-CD-Test***, así que se usará el mismo nombre para ***DockerHub***.
+Otra necesidad que tiene la acción es el ***nombre del repositorio*** que se va a usar en ***DockerHub***, la variable ***github.repository*** contiene el nombre del repositorio en ***GitHub***, que es ***CI-CD-Test***, así que se usará el mismo nombre para ***DockerHub***.
 
 Con cada nueva versión, necesitamos generar etiquetas diferentes (para que no se machaquen las previas). Hay muchas formas de hacer eso y en este ejemplo ***tag_with_ref*** y ***tag_with_sha*** hace que las etiquetas generadas por ***GitHub*** sean usadas para etiquetar la imagen en ***DockerHub***, y de esta forma tener una correlación.
+
+
+## Ejercicio 4: Crear secretos en GitHub.
+
+Los secretos almacenarán el nombre de usuario y la contraseña para poder logarse en ***Docker Hub***. Para ello, en la página web del repositorio ***CI-CD-Test*** hacemos clic en ***Settings***.
+
+Luego, en el panel que aparece a la izquierdan seleccionamos ***Secrets/Actions***, y en la parte superior derecha, hacemos clic en el botón ***New repository secret***.
+
+![new secret](./img/202209251639.png)
+
+El secreto debe llamarse exactamente así: ***DOCKER_HUB_USERNAME*** y como valor escribe tu nombre de usuario de ***Docker Hub***. Hacemos clic en el botón ***Add secret***.
+
+![USERNAME](./img/202209251656.png)
+
+Realizamos el mismo procedimiento para el password. El secreto debe llamarse ***DOCKER_HUB_PASSWORD*** y debes poner tu contraseña de ***Docker Hub***.
+
+![PASSWORD](./img/202209251656.png)
+
+
+## Ejercicio 5: Hacer push del código fuente.
+
+La parte de la ***Integración contínua (CI)*** está terminada. 
+
+Supongamos que acabamos de terminar la nueva versión de la aplicación. Con acciones de Github solo se necesita hacer un push de tu repositorio para lanzar todo el proceso.
+
 
 
 
