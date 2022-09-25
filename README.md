@@ -148,11 +148,13 @@ Está a la espera de recibir el evento ***push*** (on push), que se produce cuan
 
 ![on push](./img/202209251545.png)
 
-La acción ***implementar*** estará formada por varios trabajos o ***jobs*** (En este ejemplo uno solo). Cada trabajo realizará una serie de acciones en el workflow ***CI/CD***.
+La acción ***implementar*** estará formada por varios trabajos o ***jobs*** (En este ejemplo uno solo). Cada trabajo realizará una implementación o ***deploy***. A esta implementación la hemos llamado ***Despliegue
 
 
 
-![Acciones](./img/202209251559.png)
+![Acciones](./img/202209251600.png)
+
+
 
 
 
