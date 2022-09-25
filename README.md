@@ -144,12 +144,15 @@ nano .github/workflows/compila_y_sube.yml
 
 Esta acción de GitHub hace lo siguiente.
 
-Está a la espera de recibir el evento ***push*** (on push), que se produce cuando subimos al repositorio una actualización del código fuente (o del Dockerfile), por medio del comando ***git push***.
+Está a la espera de recibir el evento ***push*** (on push), que se produce cuando subimos al repositorio una actualización del código fuente (o del Dockerfile), por medio del comando ***git push***. Le hemos puesto el nombre ***implementar***.
 
 ![on push](./img/202209251545.png)
 
+La acción ***implementar*** estará formada por varios trabajos o ***jobs*** (En este ejemplo uno solo). Cada trabajo realizará una serie de acciones en el workflow ***CI/CD***.
 
 
+
+![Acciones](./img/202209251559.png)
 
 
 
