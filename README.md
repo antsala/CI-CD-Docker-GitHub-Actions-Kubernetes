@@ -262,7 +262,7 @@ Para desplegar el cluster en Azure, realizar el laboratorio https://github.com/a
 
 Copiamos los archivos yaml de la aplicación.
 ```
-cp ~/CI-CD-Docker-GitHub-Actions-Kubernetes/*.yml ~/CI-CD-Test/
+cp ~/CI-CD-Docker-GitHub-Actions-Kubernetes/helloContainer*.yml ~/CI-CD-Test/
 
 cd ~/CI-CD-Test
 ``` 
@@ -343,6 +343,39 @@ La acción inyecta en la variable de entorno ***KUBE_CONFIG_DATA*** el valor del
 ![cambiar imagen](./img/202209252218.png)
 
 La última acción verifica que los nuevos contenedores se han iniciado correctamente usando la última imagen, y si no es así, hace un ***rollback*** para volver al ***ReplicaSet*** anterior.
+
+![Verificar rollout](./img/202209252218.png)
+
+
+Necesitamos hacer un push. Este subirá la última versión de la aplicación, pero primero debemos borrar el workflow que solo hace la integración continua.
+```
+rm ~/CI-CD-Test/.github/workflows/compila_y_sube.yml
+```
+
+y poner en la carpeta correcta el workflow que hace CICD.
+```
+cp ~/CI-CD-Docker-GitHub-Actions-Kubernetes/compila_sube_y_despliega.yml ~/CI-CD-Test/.github/workflows
+
+cd ~/CI-CD-Test
+```
+
+Agregamos al staging.
+```
+git add ./.github/workflows/compila_sube_y_despliega.yml
+```
+
+Hacemos ***commit***.
+```
+git commit -m "Desplegar nueva versión"
+```
+
+y finalmente el ***push*** para que se inicie todo el proceso.
+```
+git push
+```
+
+
+
 
 
 
