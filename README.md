@@ -307,9 +307,13 @@ La salida debe ser similar a esta.
 
 ## Ejercicio 7: Despliegue continuo (CD)
 
-Vamos a ampliar el archivo de workflow para que haga la implementación de la nueva versión de la aplicación en el cluster de Kubernetes. El repositorio local ya tiene este archivo. Lo abrimos para estudiarlo. 
+Vamos a ampliar el archivo de workflow para que haga la implementación de la nueva versión de la aplicación en el cluster de Kubernetes. Copiamos el archivo del otro repositorio con el siguiente comando.
 ```
-nano compila_sube_y_despliega.yml
+cp ~/CI-CD-Docker-GitHub-Actions-Kubernetes/compila_sube_y_despliega.yml ~/CI-CD-Test/.github/workflows
+```
+
+```
+nano ~/CI-CD-Test/.github/workflows/compila_sube_y_despliega.yml
 ```
 
 El primer cambio es simple. Se ha cambiado el nombre del deploy a ***Integración y Despliegue Continuo (CI/CD)***.
@@ -318,7 +322,7 @@ El primer cambio es simple. Se ha cambiado el nombre del deploy a ***Integració
 
 La novedad viene en la parte del despliegue, a partir de la acción llamada ***Cambiamos la imagen de los contenedores***. Como podemos ver, hemos usado una acción escrita por el usuario ***steebchen***, que envía comandos a ***kubectl***.
 
-![steebchen](./img/202209252134.png)
+![steebchen](./img/202209252135.png)
 
 Para que GitHub pueda controlar el cluster, es necesario pasar información de autenticación del cluster de Kubernetes. Estos datos se guardarán como secreto en **GitHub***.
 
@@ -338,23 +342,19 @@ Luego, en el panel que aparece a la izquierda, seleccionamos ***Secrets/Actions*
 
 El secreto debe llamarse ***KUBE_CONFIG_DATA*** y el valor lo tenemo copiado en el portapapeles, así que lo pegamos. Guardamos.
 
-La acción inyecta en la variable de entorno ***KUBE_CONFIG_DATA*** el valor del secreto guardado en ***GitHub***. Además cambia la imagen de los contenedores (que son 3) que está corriendo el deployment a la última imagen compilada y subida a ***DockerHub***.
+La acción inyecta en la configuración el secreto ***KUBE_CONFIG_DATA***. Además cambia la imagen de los contenedores (que son 3) que está corriendo el deployment a la última imagen compilada y subida a ***DockerHub***.
 
-![cambiar imagen](./img/202209252218.png)
+![cambiar imagen](./img/202209252219.png)
 
 La última acción verifica que los nuevos contenedores se han iniciado correctamente usando la última imagen, y si no es así, hace un ***rollback*** para volver al ***ReplicaSet*** anterior.
 
-![Verificar rollout](./img/202209252218.png)
+![Verificar rollout](./img/202209252223.png)
 
 
 Necesitamos hacer un push. Este subirá la última versión de la aplicación, pero primero debemos borrar el workflow que solo hace la integración continua.
 ```
-rm ~/CI-CD-Test/.github/workflows/compila_y_sube.yml
+git rm ~/CI-CD-Test/.github/workflows/compila_y_sube.yml
 ```
-
-y poner en la carpeta correcta el workflow que hace CICD.
-```
-cp ~/CI-CD-Docker-GitHub-Actions-Kubernetes/compila_sube_y_despliega.yml ~/CI-CD-Test/.github/workflows
 
 cd ~/CI-CD-Test
 ```

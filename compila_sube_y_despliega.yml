@@ -34,18 +34,13 @@ jobs:
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/hellocontainer_cicd:${{ steps.gettime.outputs.time }}
 
       - name: Cambiamos la imagen de los contenedores
-        uses: steebchen/kubectl@master
-        env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        uses: steebchen/kubectl@v2.0.0
         with:
-          args: set image --record deployment/hello-container-deployment \
-            hello-container=${{ secrets.DOCKER_HUB_USERNAME }}/hellocontainer_cicd:${{ steps.gettime.outputs.time }}
+          config: ${{ secrets.KUBE_CONFIG_DATA }}
+          command: set image deployment/hello-container-deployment hello-container=${{ secrets.DOCKER_HUB_USERNAME }}/hellocontainer_cicd:${{ steps.gettime.outputs.time }}
 
       - name: Verificar que el deployment está corriendo.
-        uses: steebchen/kubectl@master
-        env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}  
-          KUBECTL_VERSION: 1.24
+        uses: steebchen/kubectl@v2.0.0
         with:
-          args: '"rollout status deployment/hello-container-deployment"'
-      
+          config: ${{ secrets.KUBE_CONFIG_DATA }}
+          command: rollout status deployment/hello-container-deployment
