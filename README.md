@@ -148,9 +148,9 @@ Está a la espera de recibir el evento ***push*** (on push), que se produce cuan
 
 ![on push](./img/202209251545.png)
 
-La acción ***implementar*** estará formada por varios trabajos o ***jobs*** (En este ejemplo uno solo). Cada trabajo realizará una implementación o ***deploy***. A esta implementación la hemos llamado ***Despliegue
+La acción ***implementar*** estará formada por varios trabajos o ***jobs*** (En este ejemplo uno solo). Cada trabajo realizará una implementación o ***deploy***. A esta implementación la hemos llamado ***Despliegue en el cluster de kubernetes***. 
 
-
+Cuando compilábamos la imagen de contenedor con ***Docker*** lo hacíamos en en nuestro propio equipo, porque es obvio que esta acción de compilar debe ejecutarse el alguna parte. Al movernos al ***GitHub***, nuestro equipo ya no participa en ello, y por consiguiente necesitamos "algo" que pueda ejecutar los pasos del deploy. Ese "algo" es un contenedor que nos proporciona ***GitHub*** de manera gratuita. Nosotros solo debemos indicar la imagen que deseamos para dicho contenedor. En este ejemplo es ***ubuntu-latest***
 
 ![Acciones](./img/202209251600.png)
 
