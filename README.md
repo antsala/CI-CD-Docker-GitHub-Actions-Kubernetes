@@ -155,31 +155,36 @@ Esta acción de GitHub hace lo siguiente.
 
 Está a la espera de recibir el evento ***push*** (on push), que se produce cuando subimos al repositorio una actualización del código fuente (o del Dockerfile), por medio del comando ***git push***. Le hemos puesto el nombre ***implementar***.
 
-![on push](./img/202209251545.png)
+![on push](./img/202209251548.png)
 
-La acción ***implementar*** estará formada por varios trabajos o ***jobs*** (En este ejemplo uno solo). Cada trabajo realizará una implementación o ***deploy***. A esta implementación la hemos llamado ***Despliegue en el cluster de kubernetes***. 
+La acción ***implementar*** estará formada por varios trabajos o ***jobs*** (En este ejemplo uno solo). Cada trabajo realizará una implementación o ***deploy***. A esta implementación la hemos llamado ***Integración Continua (CI)***. 
 
 Cuando compilábamos la imagen de contenedor con ***Docker*** lo hacíamos en en nuestro propio equipo, porque es obvio que esta acción de compilar debe ejecutarse en alguna parte. Al movernos al ***GitHub***, nuestro equipo ya no participa en ello, y por consiguiente necesitamos "algo" que pueda ejecutar los pasos del deploy. Ese "algo" es un contenedor que nos proporciona ***GitHub*** de manera gratuita y corre en sus servidores. Nosotros solo debemos indicar la imagen que deseamos para dicho contenedor. En este ejemplo es ***ubuntu-latest***
 
-![Acciones](./img/202209251600.png)
+![Acciones](./img/202209251601.png)
 
-El primer paso, que tiene como nombre ***Hacemos pull del repo en ubuntu-latest***, descarga el código fuente de la aplicación y el Dockerfile en la máquina ***ubuntu-latest***. Para ello se usa la acción ***checkout@master***.
+El primer paso, que tiene como nombre ***Hacemos pull del repo en 'ubuntu-latest'***, descarga el código fuente de la aplicación y el Dockerfile en la máquina ***ubuntu-latest***. Para ello se usa la acción ***checkout@v2***.
 
-![Action checkout](./img/202209251617.png)
+![Action checkout](./img/202209251618.png)
 
-De la misma forma que haríamos manualmente con los comandos ***docker build*** y ***docker push***, automatizamos esto mediante la acción ***build-push-action@v1***.
+***GitHub*** deberá logarse en ***DockerHub*** para hacer el push de la imagen, y para eso necesita credenciales. Esas credenciales las guardaremos como ***secretos de GitHub*** (los vamos a crear en breve). De esta forma, la acción es capaz de extraer el nombre de usuario y el password necesarios, consultando los secretos ***DOCKER_HUB_USERNAME*** y ***DOCKER_HUB_PASSWORD***.
 
-![build-push-action](./img/202209251626.png)
+![login](./img/202209251627.png)
 
-Esta última acción necesita parámetros para configurarse y se los proporcionamos por medio de la instrucción ***with:***. Estudia la siguiente imagen.
+Es el momento de pensar en compilar la imagen de contenedor. La acción utilizada es ***docker/setup-buildx-action@v1.1*** que prepara a ***ubuntu-latest*** para poder compilar imágenes.
 
-![with](./img/202209251639.png)
+![buildx setup](./img/202209251643.png)
 
-***GitHub*** deberá logarse en ***DockerHub*** para hacer el push de la imagen, y para eso necesita credenciales. Esas credenciales las guardaremos como ***secretos de GitHub*** (lo vamos a hacer en breve). De esta forma, la acción es capaz de extraer el nombre de usuario y el password necesarios, consultando los secretos ***DOCKER_HUB_USERNAME*** y ***DOCKER_HUB_PASSWORD***.
 
-Otra necesidad que tiene la acción es el ***nombre del repositorio*** que se va a usar en ***DockerHub***, la variable ***github.repository*** contiene el nombre del repositorio en ***GitHub***, que es ***CI-CD-Test***, así que se usará el mismo nombre para ***DockerHub***.
+Con cada nueva versión, necesitamos generar etiquetas diferentes (para que no se machaquen las previas). Hay muchas formas de hacer eso y en este ejemplo usamos la acción ***manzm/get-time-action@v1.1*** como ejemplo de uso de acciones escritas por usuarios de la comunidad.
 
-Con cada nueva versión, necesitamos generar etiquetas diferentes (para que no se machaquen las previas). Hay muchas formas de hacer eso y en este ejemplo ***tag_with_ref*** y ***tag_with_sha*** hace que las etiquetas generadas por ***GitHub*** sean usadas para etiquetar la imagen en ***DockerHub***, y de esta forma tener una correlación.
+Esta acción tiene el id ***gettime*** que será usado luego para recuperar el string que define la fecha y hora actuales.
+
+![gettime](./img/202209251645.png)
+
+Es el momento de hacer la compilación de la imagen. La siguiente acción que usa ***docker/build-push-action@v2*** compila y la sube a ***Docker Hub***. Como nombre de la imagen usamos el nombre del usuario, seguido del repositorio ***hellocontainer_cicd*** y la etiqueta se corresponde con la fecha de la compilación, tomada de la acción anterior.
+
+![build](./img/202209251647.png)
 
 
 ## Ejercicio 4: Crear secretos en GitHub.
@@ -188,7 +193,7 @@ Los secretos almacenarán el nombre de usuario y la contraseña para poder logar
 
 Luego, en el panel que aparece a la izquierdan seleccionamos ***Secrets/Actions***, y en la parte superior derecha, hacemos clic en el botón ***New repository secret***.
 
-![new secret](./img/202209251639.png)
+![new secret](./img/202209251654.png)
 
 El secreto debe llamarse exactamente así: ***DOCKER_HUB_USERNAME*** y como valor escribe tu nombre de usuario de ***Docker Hub***. Hacemos clic en el botón ***Add secret***.
 
@@ -196,14 +201,18 @@ El secreto debe llamarse exactamente así: ***DOCKER_HUB_USERNAME*** y como valo
 
 Realizamos el mismo procedimiento para el password. El secreto debe llamarse ***DOCKER_HUB_PASSWORD*** y debes poner tu contraseña de ***Docker Hub***.
 
-![PASSWORD](./img/202209251656.png)
+![PASSWORD](./img/202209251700.png)
 
 
 ## Ejercicio 5: Hacer push del código fuente.
 
 La parte de la ***Integración contínua (CI)*** está terminada. 
 
-Supongamos que acabamos de terminar la nueva versión de la aplicación. Con acciones de Github solo se necesita hacer un push de tu repositorio para lanzar todo el proceso.
+Supongamos que acabamos de terminar la nueva versión de la aplicación. Con acciones de Github solo se necesita hacer un push de tu repositorio para lanzar todo el proceso. En la terminal, escribimos.
+```
+git push
+```
+
 
 
 
