@@ -3,7 +3,8 @@ Ejemplo de un CI/CD completo Github Actions.
 
 Requisitos:
 
-* Docker y Minikube instalados.
+* Docker en la máquina local. 
+* Un cluster de Kubernetes en el cloud.
 
 
 Este tutorial realiza un recorrido completo para desplegar un CI/CD básico desde un Archivo Dockerfile hasta el despliegue del deployment correspondiente en Kubernetes.
@@ -254,14 +255,10 @@ En tu repositorio de ***Docker Hub*** verás la nueva imagen subida.
 
 Con esto queda finalizada la parte de Integración Continua.
 
-## Ejercicio 6: Iniciar Minikube y crear un deployment de prueba.
+## Ejercicio 6: Despleglar el cluster de Kubernetes y crear un deployment de prueba.
 
-Probamos el despliegue de la aplicación en el cluster Minikube.
+Para desplegar el cluster en Azure, realizar el laboratorio https://github.com/antsala/k8s_desarrolladores/blob/main/00/lab-00.md
 
-Iniciamos ***Minikube***. En la terminal, escribimos.
-```
-minikube start
-```
 
 Copiamos los archivos yaml de la aplicación.
 ```
@@ -314,6 +311,25 @@ La salida debe ser similar a esta.
 
 
 ## Ejercicio 7: Despliegue continuo (CD)
+
+Vamos a ampliar el archivo de workflow para que haga la implementación de la nueva versión de la aplicación en el cluster de Kubernetes. El repositorio local ya tiene este archivo. Lo abrimos para estudiarlo.
+```
+nano compila_sube_y_despliega.yml
+```
+
+El primer cambio es simple. Se ha cambiado el nombre del deploy a ***Integración y Despliegue Continuo (CI/CD)***.
+
+![CICD](./img/202209252130.png)
+
+La novedad viene en la parte del despliegue, a partir de la acción llamada ***Cambiamos la imagen de los contenedores***. Como podemos ver, hemos usado una acción escrita por el usuario ***steebchen***, que envía comandos a ***kubectl***.
+
+![steebchen](./img/202209252134.png)
+
+Para que GitHub pueda controlar el cluster, es necesario pasar información de autenticación del cluster Minikube. Estos datos se guardarán como secreto.
+
+
+
+
 
 
 

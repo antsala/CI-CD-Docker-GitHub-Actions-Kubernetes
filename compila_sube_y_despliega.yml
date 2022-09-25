@@ -3,7 +3,7 @@ on:
 name: implementar
 jobs:
   deploy:
-    name: Integración y Despliegue Continua (CI/CD)
+    name: Integración y Despliegue Continuo (CI/CD)
     runs-on: ubuntu-latest
     steps:
       - name: Hacemos pull del repo en 'ubuntu-latest'
