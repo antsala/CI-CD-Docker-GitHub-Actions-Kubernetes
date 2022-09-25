@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: hello-container
-          image: antsala/hello_container
+          image: antsala/hellocontainer_cicd:<pon_la_etiqueta>
           ports:
             - containerPort: 8080

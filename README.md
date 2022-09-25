@@ -256,7 +256,15 @@ Con esto queda finalizada la parte de Integración Continua.
 
 ## Ejercicio 6: Iniciar Minikube y crear un deployment de prueba.
 
+Probamos el despliegue de la aplicación en el cluster Minikube.
 
+
+
+
+Copiamos los archivos yaml de la aplicación.
+```
+cp ~/CI-CD-Docker-GitHub-Actions-Kubernetes/*.yml ~/CI-CD-Test/
+``` 
 
 
 
