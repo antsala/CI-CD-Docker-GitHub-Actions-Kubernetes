@@ -147,6 +147,12 @@ mkdir -p .github/workflows
 
 El el directorio anterior, creamos un archivo que definirá la acción de github. El nombre puede ser cualquiera, pero debe usar formato ***YAML***.
 Nota: lo llamamos ***compila_y_sube.yml*** porque su finalidad es generar la imagen de contenedor y subirla a ***DockerHub***. 
+
+Por comodidad, tenemos el archivo ya escrito, solo hay que copiarlo del otro repositorio con el siguiente comando.
+```
+cp ~/CI-CD-Docker-GitHub-Actions-Kubernetes/compila_y_sube.yml ~/CI-CD-Test/.github/workflows
+```
+
 ```
 nano .github/workflows/compila_y_sube.yml
 ```
@@ -206,12 +212,31 @@ Realizamos el mismo procedimiento para el password. El secreto debe llamarse ***
 
 ## Ejercicio 5: Hacer push del código fuente.
 
-La parte de la ***Integración contínua (CI)*** está terminada. 
+Supongamos que acabamos de terminar la nueva versión de la aplicación. Con ***acciones de Github*** solo se necesita hacer un push de tu repositorio local para lanzar todo el proceso. 
 
-Supongamos que acabamos de terminar la nueva versión de la aplicación. Con acciones de Github solo se necesita hacer un push de tu repositorio para lanzar todo el proceso. En la terminal, escribimos.
+
+Debemos "simular" que tenemos una versión nueva en el código fuente, de lo contrario el comando push indicará que no hay cambios.
+
+En la terminal, escribimos. actualizamos el comentario de la primera línea poniendo la fecha y hora actuales. Guardamos.
+```
+nano helloContainer/helloContainer.go
+```
+
+Añadimos al stage el archivo.
+```
+git add .github/workflows/compila_y_sube.yml
+```
+
+Hacemos el commit.
+```
+
+
+
 ```
 git push
 ```
+
+En la página web del repositorio ***CI-CD-Test*** hacemos clic en el botón ***Actions***, debemos ver como se ha capturado el evento push y se dispara el workflow.
 
 
 
