@@ -154,9 +154,24 @@ Cuando compilábamos la imagen de contenedor con ***Docker*** lo hacíamos en en
 
 ![Acciones](./img/202209251600.png)
 
-El primer paso, que tiene como nombre ***Hacemos pull del repo en ubuntu-latest***, descarga el código fuente de la aplicación y el Dockerfile en la máquina ***ubuntu-latest***.
+El primer paso, que tiene como nombre ***Hacemos pull del repo en ubuntu-latest***, descarga el código fuente de la aplicación y el Dockerfile en la máquina ***ubuntu-latest***. Para ello se usa la acción ***checkout@master***.
 
 ![Action checkout](./img/202209251617.png)
+
+De la misma forma que haríamos manualmente con los comandos ***docker build*** y ***docker push***, automatizamos esto mediante la acción ***build-push-action@v1***.
+
+![build-push-action](./img/202209251626.png)
+
+Esta última acción necesita parámetros para configurarse y se los proporcionamos por medio de la instrucción ***with:***. Estudia la siguiente imagen.
+
+![with](./img/202209251639.png)
+
+***GitHub*** deberá logarse en ***DockerHub*** para hacer el push de la imagen, y para eso necesita credenciales. Esas credenciales las guardaremos como ***secretos*** de DockerHub (lo vamos a hacer en breve). De esta forma, la acción es capaz de extraer el nombre de usuario y el password necesarios, consultando los secretos ***DOCKER_HUB_USERNAME*** y ***DOCKER_HUB_PASSWORD***.
+
+Otra necesitad que tiene la acción es el nombre del repositorio que se va a usar en ***DockerHub***, la variable ***github.repository*** con tiene el nombre del repositorio en ***GitHub***, que es ***CI-CD-Test***, así que se usará el mismo nombre para ***DockerHub***.
+
+Con cada nueva versión, necesitamos generar etiquetas diferentes (para que no se machaquen las previas). Hay muchas formas de hacer eso y en este ejemplo ***tag_with_ref*** y ***tag_with_sha*** hace que las etiquetas generadas por ***GitHub*** sean usadas para etiquetar la imagen en ***DockerHub***, y de esta forma tener una correlación.
+
 
 
 
