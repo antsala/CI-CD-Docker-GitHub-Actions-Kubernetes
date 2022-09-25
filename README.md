@@ -8,6 +8,17 @@ Requisitos:
 
 Este tutorial realiza un recorrido completo para desplegar un CI/CD básico desde un Archivo Dockerfile hasta el despliegue del deployment correspondiente en Kubernetes.
 
+Para facilitar la práctica, clonamos el directorio que contiene este documento y el resto de archivos que necesitarás para realizar la práctica.
+
+En la terminal ejecuta.
+```
+cd ~
+
+git clone https://github.com/antsala/CI-CD-Docker-GitHub-Actions-Kubernetes.git
+```
+
+
+
 ## Ejercicio 1: Crear un repositorio nuevo en ***Github*** y clonarlo.
 
 En ***GitHub*** creamos un repositorio llamado ***CI-CD-Test***.
@@ -26,6 +37,18 @@ Entramos en el directorio que se acaba de crear.
 ```
 cd CI-CD-Test
 ```
+
+Vamos a copiar algunos archivos necesarios desde el repositorio ***CI-CD-Docker-GitHub-Actions-Kubernetes*** a este directorio.
+```
+cp -r ~/CI-CD-Docker-GitHub-Actions-Kubernetes/helloContainer/ .
+
+cp ~/CI-CD-Docker-GitHub-Actions-Kubernetes/Dockerfile .
+```
+
+Como puedes ver en la siguiente imagen, tenemos el ***Dockerfile*** que genera la imagen. En la carpeta ***helloContainer*** está el código fuente de la aplicación.
+
+![Archivos copiados](./img/202209251430.png)
+
 
 ## Ejercicio 2: Contenerizar la aplicación.
 
