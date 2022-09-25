@@ -266,18 +266,56 @@ minikube start
 Copiamos los archivos yaml de la aplicación.
 ```
 cp ~/CI-CD-Docker-GitHub-Actions-Kubernetes/*.yml ~/CI-CD-Test/
+
+cd ~/CI-CD-Test
 ``` 
 
-Editamos el archivo de deployment 
+Editamos el archivo de deployment
+```
+nano helloContainerDeployment.yml
+```
+
+Debemos cambiar la imagen y poner la etiqueta correctamente. Para ello deberás comprobar la etiqueta de la última imagen generada en ***Docker Hub***.
+
+![Pon la etiqueta](./img/202209252044.png)
+
+Cuando lo hayas actualizado. Guarda el archivo.
 
 Hacemos el deployment.
 ```
-cd ~/CI-CD-Test
-
 kubectl apply -f helloContainerDeployment.yml
 
 kubectl apply -f helloContainerService.yml
 ```
+
+Habilitamos el túnel de Minikube. En una nueva terminal escribimos.
+```
+minikube tunnel
+```
+
+Volvemos a la terminal anterior y escribimos.
+```
+kubectl get services
+```
+
+Mostramos el servicio y anotamos la ***EXTERNAL-IP***.
+```
+kubectl get service hello-container-service
+```
+
+Probamos que funciona.
+```
+curl <Pon_aqui_la_EXTERNAL-IP>
+```
+
+La salida debe ser similar a esta.
+
+![curl](./img/202209252051.png)
+
+
+## Ejercicio 7: Despliegue continuo (CD)
+
+
 
 
 
