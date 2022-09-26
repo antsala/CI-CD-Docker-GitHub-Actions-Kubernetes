@@ -23,7 +23,9 @@ git clone https://github.com/antsala/CI-CD-Docker-GitHub-Actions-Kubernetes.git
 ## Ejercicio 1: Crear un repositorio nuevo en ***Github*** y clonarlo.
 
 En ***GitHub*** creamos un repositorio llamado ***CI-CD-Test***.
+
 Nota: El nombre del repositorio puedes cambiarlo a tu gusto.
+
 Nota: Si ya has realizado este laboratorio antes, elimina el repo y vuelve a crearlo desde cero.
 
 En la terminal vamos a clonar el repositorio remoto.
@@ -98,14 +100,6 @@ Hacia la parte final de la página web encontraremos el botón ***Generate token
 
 Copiamos el token de acceso en el portapapeles. Es importante tener en cuenta que ya no lo podremos visualizar más y, si lo perdemos, será necesario crear un ***PAT*** nuevo. Es una buena técnica almacenar este token en alguna aplicación que almacene passwords de forma segura para poder acceder a él cuando sea necesario.
 
-En este laboratorio y por comodidad, indicaremos a ***git*** que cachee el password, para que así no tengamos que escribirlo más.
-Nota: Es una mala práctica hacer esto en entornos de producción.
-
-En la terminal escribimos el siguiente comando para cachear las contraseñas.
-```
-git config --global credential.helper cache
-```
-
 Ahora hacemos el ***push***. En la terminal escribimos.
 
 ```
@@ -119,7 +113,7 @@ Ya tenemos el código fuente de la app y el Dockerfile para general la imagen en
 
 ## Ejercicio 2: Contenerizar la aplicación.
 
-La aplicación ***helloContainer*** levanta un servidor web en el puerto ***8080***. Cuando te conectas a él, responde mostrando en nombre de la máquina y las IPs que tiene configurada.
+La aplicación ***helloContainer*** levanta un servidor web en el puerto ***8080***. Cuando te conectas a él, responde mostrando en nombre de la máquina y las IPs que tiene configuradas.
 
 Vamos a abrir el archivo ***helloContainer.go*** que tiene el código fuente de la aplicación. Usa tu editor preferido (en este tutorial usamos ***nano***)
 Nota: Para salir usa ***CTRL+X***.
