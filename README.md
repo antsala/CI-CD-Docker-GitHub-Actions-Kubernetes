@@ -225,9 +225,10 @@ cd ~/CI-CD-Test
 nano helloContainer/helloContainer.go
 ```
 
-Añadimos al stage el archivo.
+Añadimos al stage los arvhivos
 ```
 git add .github/workflows/compila_y_sube.yml
+git add ~/CI-CD-Test/.github/workflows/compila_y_sube.yml
 ```
 
 Hacemos el commit.
