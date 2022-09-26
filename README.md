@@ -116,7 +116,9 @@ Ya tenemos el código fuente de la app y el Dockerfile para general la imagen en
 La aplicación ***helloContainer*** levanta un servidor web en el puerto ***8080***. Cuando te conectas a él, responde mostrando en nombre de la máquina y las IPs que tiene configuradas.
 
 Vamos a abrir el archivo ***helloContainer.go*** que tiene el código fuente de la aplicación. Usa tu editor preferido (en este tutorial usamos ***nano***)
+
 Nota: Para salir usa ***CTRL+X***.
+
 ```
 nano helloContainer/helloContainer.go
 ```
@@ -141,6 +143,7 @@ mkdir -p ~/CI-CD-Test/.github/workflows
 ```
 
 El el directorio anterior, creamos un archivo que definirá la acción de github. El nombre puede ser cualquiera, pero debe usar formato ***YAML***.
+
 Nota: lo llamamos ***compila_y_sube.yml*** porque su finalidad es generar la imagen de contenedor y subirla a ***DockerHub***. 
 
 Por comodidad, tenemos el archivo ya escrito, solo hay que copiarlo del otro repositorio con el siguiente comando.
@@ -213,7 +216,9 @@ Supongamos que acabamos de terminar la nueva versión de la aplicación. Con ***
 Debemos "simular" que tenemos una versión nueva en el código fuente, de lo contrario el comando push indicará que no hay cambios.
 
 Creamos un comentario en la primera línea poniendo la fecha y hora actuales. Guardamos.
+
 Nota: Usa ***//*** para poner un comentario.
+
 ```
 cd ~/CI-CD-Test
 
@@ -346,7 +351,9 @@ La última acción verifica que los nuevos contenedores se han iniciado correcta
 
 
 Necesitamos hacer un push. Este subirá la última versión de la aplicación, pero primero debemos borrar el workflow que solo hace la integración continua.
+
 Nota: git ***rm*** también borra el archivo.
+
 ```
 git rm ~/CI-CD-Test/.github/workflows/compila_y_sube.yml
 
